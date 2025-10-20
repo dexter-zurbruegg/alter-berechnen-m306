@@ -8,6 +8,7 @@ def calculate_age(birthdate_str: str):
         print(f"Fehler: Ungültiges Datumsformat '{birthdate_str}'. Erwartet wird dd.mm.yyyy oder ein falsches Datum wurde eingegeben. Bitte versuche es erneut.")
         return
 
+    # today's date is saved in the variable "today" and used for later calculations
     today = date.today()
 
     if birthdate > today:
@@ -22,8 +23,10 @@ def calculate_age(birthdate_str: str):
     months = today.month - birthdate.month
     days = today.day - birthdate.day
 
-    # handling negative days
+    # handling negative days, if the birthday hasn't occurred yet in that month
+    # example: today is March 5, Birthday is February 20, 5-20 equals a negative 15
     if days < 0:
+        # reducing the month due to borrowing days from the previous month
         months -= 1
         first_of_this_month = date(today.year, today.month, 1)
         last_of_prev_month = first_of_this_month - timedelta(days=1)
