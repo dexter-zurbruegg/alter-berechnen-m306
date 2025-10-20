@@ -1,44 +1,44 @@
 import sys
 from datetime import datetime, date
 
-def berechne_alter(geburtstag_str: str):
+def calculate_age(birthdate_str: str):
     try:
-        geburtstag = datetime.strptime(geburtstag_str, "%d.%m.%Y").date()
+        birthdate = datetime.strptime(birthdate_str, "%d.%m.%Y").date()
     except ValueError:
-        print(f"Fehler: Ungültiges Datumsformat '{geburtstag_str}'. Erwartet wird dd.mm.yyyy")
+        print(f"Fehler: Ungültiges Datumsformat '{birthdate_str}'. Erwartet wird dd.mm.yyyy")
         sys.exit(1)
 
-    heute = date.today()
+    today = date.today()
 
-    if geburtstag > heute:
+    if birthdate > today:
         print("Fehler: Das Geburtsdatum liegt in der Zukunft.")
         sys.exit(1)
 
-    # Gesamttage berechnen
-    differenz_tage = (heute - geburtstag).days
+    # Calculate total days
+    total_days = (today - birthdate).days
 
-    # Jahre, Monate, Tage zerlegen
-    jahre = heute.year - geburtstag.year
-    monate = heute.month - geburtstag.month
-    tage = heute.day - geburtstag.day
+    # Split into years, months, days
+    years = today.year - birthdate.year
+    months = today.month - birthdate.month
+    days = today.day - birthdate.day
 
-    # Korrekturen falls negativ
-    if tage < 0:
-        monate -= 1
-        letzter_monat = (heute.month - 1) if heute.month > 1 else 12
-        jahr_letzter_monat = heute.year if heute.month > 1 else heute.year - 1
-        tage_im_monat = (date(jahr_letzter_monat, letzter_monat + 1, 1) - date(jahr_letzter_monat, letzter_monat, 1)).days
-        tage += tage_im_monat
+    # Corrections if negative
+    if days < 0:
+        months -= 1
+        previous_month = (today.month - 1) if today.month > 1 else 12
+        previous_month_year = today.year if today.month > 1 else today.year - 1
+        days_in_prev_month = (date(previous_month_year, previous_month + 1, 1) - date(previous_month_year, previous_month, 1)).days
+        days += days_in_prev_month
 
-    if monate < 0:
-        jahre -= 1
-        monate += 12
+    if months < 0:
+        years -= 1
+        months += 12
 
-    print(f"Das Alter ist {jahre} Jahre, {monate} Monate und {tage} Tage, das sind {differenz_tage} Tage")
+    print(f"Das Alter ist {years} Jahre, {months} Monate und {days} Tage, das sind {total_days} Tage")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Aufruf: python3 alter.py dd.mm.yyyy")
         sys.exit(1)
 
-    berechne_alter(sys.argv[1])
+    calculate_age(sys.argv[1])
