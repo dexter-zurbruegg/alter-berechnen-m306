@@ -6,7 +6,7 @@ def calculate_age(birthdate_str: str):
         birthdate = datetime.strptime(birthdate_str, "%d.%m.%Y").date()
     except ValueError:
         print(f"Fehler: Ungültiges Datumsformat '{birthdate_str}'. Erwartet wird dd.mm.yyyy oder ein falsches Datum wurde eingegeben. Bitte versuche es erneut.")
-        return  # Don't exit, continue with other birthdays
+        return
 
     today = date.today()
 
